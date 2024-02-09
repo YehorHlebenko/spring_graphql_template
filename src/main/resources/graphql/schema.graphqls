@@ -1,0 +1,21 @@
+type Query{
+    findAllUsers: [User]
+}
+
+type Mutation{
+    registerUser(userData: UserData): String
+}
+
+type Subscription{
+    subscribeToUser: User
+}
+
+type User{
+    id: String
+    email: String
+}
+
+input UserData{
+    id: String
+    email: String
+}
