@@ -29,7 +29,6 @@ public class GraphQlController {
         String response = null;
         try {
             User createdUser = userService.createUser(userData);
-            //userService.onUserCreated();
             response = "Successfully saved user!";
         } catch (Exception e) {
             response = "Something went wrong! " + e.toString();
