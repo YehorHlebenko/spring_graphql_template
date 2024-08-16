@@ -1,7 +1,7 @@
 package com.chethan.graphql.graphqldemospringboot.controller;
 
-import com.chethan.graphql.graphqldemospringboot.model.User;
-import com.chethan.graphql.graphqldemospringboot.service.UserService;
+import com.chethan.graphql.graphqldemospringboot.model.Book;
+import com.chethan.graphql.graphqldemospringboot.service.BookService;
 import org.reactivestreams.Publisher;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.graphql.data.method.annotation.Argument;
@@ -9,35 +9,34 @@ import org.springframework.graphql.data.method.annotation.SchemaMapping;
 import org.springframework.stereotype.Controller;
 
 import java.util.List;
-import java.util.UUID;
 
 @Controller
 public class GraphQlController {
-    private final UserService userService;
+    private final BookService bookService;
     @Autowired
-    public GraphQlController(UserService myUserService){
-        userService = myUserService;
+    public GraphQlController(BookService myBookService){
+        bookService = myBookService;
     }
 
-    @SchemaMapping(typeName = "Subscription", field = "subscribeToUser")
-    public Publisher<User> subscribeToUser() {
-        return userService.onUserCreated();
+    @SchemaMapping(typeName = "Subscription", field = "subscribeToBookChange")
+    public Publisher<Book> subscribeToBookChange() {
+        return bookService.onBookCreated();
     }
 
-    @SchemaMapping(typeName = "Mutation", field = "registerUser")
-    public String registerUser(@Argument User userData) {
+    @SchemaMapping(typeName = "Mutation", field = "registerBook")
+    public String registerBook(@Argument Book bookData) {
         String response = null;
         try {
-            User createdUser = userService.createUser(userData);
-            response = "Successfully saved user!";
+            Book createdBook = bookService.createBook(bookData);
+            response = "Successfully saved book!";
         } catch (Exception e) {
-            response = "Something went wrong! " + e.toString();
+            response = "Something went wrong! " + e;
         }
         return response;
     }
 
-    @SchemaMapping(typeName = "Query", field = "findAllUsers")
-    public List<User> findAllUsers(){
-        return userService.getAllUsers();
+    @SchemaMapping(typeName = "Query", field = "findAllBooks")
+    public List<Book> findAllBook(){
+        return bookService.getAllBooks();
     }
 }

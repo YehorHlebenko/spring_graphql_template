@@ -1,21 +1,21 @@
 type Query{
-    findAllUsers: [User]
+    findAllBooks: [Book]
 }
 
 type Mutation{
-    registerUser(userData: UserData): String
+    registerBook(bookData: BookData): String
 }
 
 type Subscription{
-    subscribeToUser: User
+    subscribeToBookChange: Book
 }
 
-type User{
+type Book{
     id: String
-    email: String
+    title: String
 }
 
-input UserData{
+input BookData{
     id: String
-    email: String
+    title: String
 }
