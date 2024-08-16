@@ -18,6 +18,7 @@ public class BookService {
   @Autowired
   public BookService(BookRepository myBookRepository) {
     this.bookRepository = myBookRepository;
+    // Create an instance for subscription
     this.bookCreatedSink = Sinks.many().multicast().onBackpressureBuffer(Queues.SMALL_BUFFER_SIZE, false);
   }
 
@@ -34,6 +35,7 @@ public class BookService {
   }
 
   public Flux<Book> onBookCreated() {
+    // Open a channel for our listener.
     return bookCreatedSink.asFlux();
   }
 }
